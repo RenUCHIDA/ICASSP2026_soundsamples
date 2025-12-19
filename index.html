@@ -1,296 +1,278 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Encoder-Masking-Decoder Framework Using Cayley Convolution as Invertible Linear Encoder</title>
-        <link rel="stylesheet" type="text/css" href="style.css" />
-    </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encoder-Masking-Decoder Framework Using Cayley Convolution as Invertible Linear Encoder</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
 
-    <body>
-        <div class="main">
-            <article>
-                <header>
-                    <h1>Encoder-Masking-Decoder Framework Using Cayley Convolution as Invertible Linear Encoder</h1>
-                </header>
-            </article>
-            <div>
-                <p>
-                    Ren Uchida,
-                    Kohei Yatabe,
-                    Tomohiko Nakamura
-                </p>
+<body>
+    <div class="main">
+        <article>
+            <header>
+                <h1>Encoder-Masking-Decoder Framework Using Cayley Convolution as Invertible Linear Encoder</h1>
+                <div class="authors">
+                    <p>Ren Uchida, Kohei Yatabe, Tomohiko Nakamura</p>
+                </div>
+            </header>
+
+            <div class="abstract">
+                <b>Abstract:</b><br>
+                While the ordinary audio signal processing scheme has relied on predefined time-frequency analysis, recent end-to-end frameworks have adopted trainable 1-D convolutional layers as the encoder for feature extraction of input signals.
+                An input signal is encoded into some learned representation, processed by a deep neural network (DNN), and reconstructed into the time domain by another convolutional layer (i.e., the decoder).
+                However, even when no processing is applied to the encoded signal, a pair of trained encoder and decoder cannot reconstruct the input signal in general; in other words, the encoder-decoder pair does not achieve perfect reconstruction.
+                In this paper, to circumvent the information loss caused by such a non-invertible encoder, we propose to apply an orthogonal convolutional layer to end-to-end DNNs, Conv-TasNet and RE-SepFormer, together with a reshaping technique to make it practical for audio applications.
+                The proposed DNNs were evaluated through a speech enhancement task, and the experimental results showed their invertibility as well as effectiveness in alleviating the difficulty of training when the kernel size of the encoder and decoder is large.
             </div>
-            <p><b>Abstract:</b> 
-                    While the ordinary audio signal processing scheme has relied on predefined time-frequency analysis, recent end-to-end frameworks have adopted trainable 1-D convolutional layers as the encoder for feature extraction of input signals.
-                    An input signal is encoded into some learned representation, processed by a deep neural network (DNN), and reconstructed into the time domain by another convolutional layer (i.e., the decoder).
-                    However, even when no processing is applied to the encoded signal, a pair of trained encoder and decoder cannot reconstruct the input signal in general; in other words, the encoder-decoder pair does not achieve perfect reconstruction.
-                    In this paper, to circumvent the information loss caused by such a non-invertible encoder, we propose to apply an orthogonal convolutional layer to end-to-end DNNs, Conv-TasNet and RE-SepFormer, together with a reshaping technique to make it practical for audio applications.
-                    The proposed DNNs were evaluated through a speech enhancement task, and the experimental results showed their invertibility as well as effectiveness in alleviating the difficulty of training when the kernel size of the encoder and decoder is large.
-            <br /><br />
-            <!-- <img src="img/3dsqueezing.png" width="60%" height="60%" class="center"/> <br />
-            <font size="2pt"><p><b>Fig.</b> Illustration of the proposed time-directional squeezing. In the bottom figures, the percussive component is colored in blue, the sinusoidal component is colored in red, and the mixed component is colored in purple.</p></font><br /> -->
+        </article>
 
-            <div>
-            <br />
-            <!-- We used eight algorithms for seven audio excerpts from [1]. The seven excerpts were stretched by the eight algorithms with a moderate time stretching factor &alpha; = 1.6 and a large stretching factor &alpha; = 3.2. -->
-            <br />
-            <br />
-            <!-- <b>Google Chrome is recommended.</b> -->
-            <br /><br />
-
-
-
-            <b>Sample 1 (VoiceBank-DEMAND p232_001)</b>
+        <div class="sample-section">
+            <div class="sample-title">Sample 1 (VoiceBank-DEMAND p232_001)</div>
+            
             <div class="columns-container">
-            <div class="column">
-            <center>
-            <b> Conv-TasNet </b><br />
-            <table>
-            <tbody>
-                <tr>
-                    <th align="left"> Conventional </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_ctn_conv_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_ctn_conv_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_ctn_conv_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_ctn_conv_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> Conventional (r=1) </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_ctn_conv(r=1)_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_ctn_conv(r=1)_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_ctn_conv(r=1)_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_ctn_conv(r=1)_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> Proposed </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_ctn_prop_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_ctn_prop_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_ctn_prop_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_ctn_prop_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> kernel size [ms] </th>
-                    <td align="center"> 2 <br /></td>
-                    <td align="center"> 32 <br /></td>
-                    <td align="center"> 128 <br /></td>
-                    <td align="center"> 512 <br /></td>
-                </tr>
-            </tbody>
-            </table>
-            </center><br /><br />
+                <div class="column">
+                    <span class="model-name">Conv-TasNet</span>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method / Kernel (ms)</th>
+                                <th>2</th>
+                                <th>32</th>
+                                <th>128</th>
+                                <th>512</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Conventional</th>
+                                <td><audio controls src="soundsamples/p232_001/output_ctn_conv_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_ctn_conv_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_ctn_conv_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_ctn_conv_4096.wav"></audio></td>
+                            </tr>
+                            <tr>
+                                <th>Conventional (r=1)</th>
+                                <td><audio controls src="soundsamples/p232_001/output_ctn_conv(r=1)_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_ctn_conv(r=1)_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_ctn_conv(r=1)_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_ctn_conv(r=1)_4096.wav"></audio></td>
+                            </tr>
+                            <tr class="proposed-row">
+                                <th>Proposed</th>
+                                <td><audio controls src="soundsamples/p232_001/output_ctn_prop_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_ctn_prop_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_ctn_prop_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_ctn_prop_4096.wav"></audio></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="column">
+                    <span class="model-name">RE-SepFormer</span>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method / Kernel (ms)</th>
+                                <th>2</th>
+                                <th>32</th>
+                                <th>128</th>
+                                <th>512</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Conventional</th>
+                                <td><audio controls src="soundsamples/p232_001/output_res_conv_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_res_conv_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_res_conv_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_res_conv_4096.wav"></audio></td>
+                            </tr>
+                            <tr>
+                                <th>Conventional (r=1)</th>
+                                <td><audio controls src="soundsamples/p232_001/output_res_conv(r=1)_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_res_conv(r=1)_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_res_conv(r=1)_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_res_conv(r=1)_4096.wav"></audio></td>
+                            </tr>
+                            <tr class="proposed-row">
+                                <th>Proposed</th>
+                                <td><audio controls src="soundsamples/p232_001/output_res_prop_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_res_prop_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_res_prop_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_001/output_res_prop_4096.wav"></audio></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <div class="column">
-            <center>
-            <b> RE-SepFormer </b><br />
-            <table>
-            <tbody>
-                <tr>
-                    <th align="left"> Conventional </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_res_conv_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_res_conv_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_res_conv_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_res_conv_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> Conventional (r=1) </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_res_conv(r=1)_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_res_conv(r=1)_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_res_conv(r=1)_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_res_conv(r=1)_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> Proposed </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_res_prop_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_res_prop_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_res_prop_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_001/output_res_prop_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> kernel size [ms] </th>
-                    <td align="center"> 2 <br /></td>
-                    <td align="center"> 32 <br /></td>
-                    <td align="center"> 128 <br /></td>
-                    <td align="center"> 512 <br /></td>
-                </tr>
-            </tbody>
-            </table>
-            </center><br /><br />
-            </div>
-            </div>
-
-
-
-            <b>Sample 2 (VoiceBank-DEMAND p232_002)</b>
-            <div class="columns-container">
-            <div class="column">
-            <center>
-            <b> Conv-TasNet </b><br />
-            <table>
-            <tbody>
-                <tr>
-                    <th align="left"> Conventional </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_ctn_conv_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_ctn_conv_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_ctn_conv_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_ctn_conv_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> Conventional (r=1) </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_ctn_conv(r=1)_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_ctn_conv(r=1)_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_ctn_conv(r=1)_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_ctn_conv(r=1)_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> Proposed </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_ctn_prop_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_ctn_prop_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_ctn_prop_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_ctn_prop_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> kernel size [ms] </th>
-                    <td align="center"> 2 <br /></td>
-                    <td align="center"> 32 <br /></td>
-                    <td align="center"> 128 <br /></td>
-                    <td align="center"> 512 <br /></td>
-                </tr>
-            </tbody>
-            </table>
-            </center><br /><br />
-            </div>
-
-            <div class="column">
-            <center>
-            <b> RE-SepFormer </b><br />
-            <table>
-            <tbody>
-                <tr>
-                    <th align="left"> Conventional </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_res_conv_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_res_conv_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_res_conv_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_res_conv_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> Conventional (r=1) </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_res_conv(r=1)_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_res_conv(r=1)_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_res_conv(r=1)_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_res_conv(r=1)_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> Proposed </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_res_prop_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_res_prop_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_res_prop_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_002/output_res_prop_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> kernel size [ms] </th>
-                    <td align="center"> 2 <br /></td>
-                    <td align="center"> 32 <br /></td>
-                    <td align="center"> 128 <br /></td>
-                    <td align="center"> 512 <br /></td>
-                </tr>
-            </tbody>
-            </table>
-            </center><br /><br />
-            </div>
-            </div>
-
-
-
-            <b>Sample 3 (VoiceBank-DEMAND p232_003)</b>
-            <div class="columns-container">
-            <div class="column">
-            <center>
-            <b> Conv-TasNet </b><br />
-            <table>
-            <tbody>
-                <tr>
-                    <th align="left"> Conventional </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_ctn_conv_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_ctn_conv_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_ctn_conv_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_ctn_conv_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> Conventional (r=1) </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_ctn_conv(r=1)_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_ctn_conv(r=1)_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_ctn_conv(r=1)_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_ctn_conv(r=1)_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> Proposed </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_ctn_prop_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_ctn_prop_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_ctn_prop_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_ctn_prop_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> kernel size [ms] </th>
-                    <td align="center"> 2 <br /></td>
-                    <td align="center"> 32 <br /></td>
-                    <td align="center"> 128 <br /></td>
-                    <td align="center"> 512 <br /></td>
-                </tr>
-            </tbody>
-            </table>
-            </center><br /><br />
-            </div>
-
-            <div class="column">
-            <center>
-            <b> RE-SepFormer </b><br />
-            <table>
-            <tbody>
-                <tr>
-                    <th align="left"> Conventional </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_res_conv_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_res_conv_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_res_conv_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_res_conv_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> Conventional (r=1) </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_res_conv(r=1)_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_res_conv(r=1)_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_res_conv(r=1)_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_res_conv(r=1)_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> Proposed </th>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_res_prop_16.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_res_prop_256.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_res_prop_1024.wav"></audio><br /></td>
-                    <td align="center"> <audio controls src="soundsamples/p232_003/output_res_prop_4096.wav"></audio><br /></td>
-                </tr>
-                <tr>
-                    <th align="left"> kernel size [ms] </th>
-                    <td align="center"> 2 <br /></td>
-                    <td align="center"> 32 <br /></td>
-                    <td align="center"> 128 <br /></td>
-                    <td align="center"> 512 <br /></td>
-                </tr>
-
-            </tbody>
-            </table>
-            </center><br /><br />
-            </div>
-            </div>
-
-
-
-            <!-- <h3 id="references">References:</h3>
-            <p>
-            [1] Y. Luo and N. Mesgarani, “Conv-TasNet: Surpassing ideal time–frequency magnitude masking for speech separation,” IEEE/ACM Trans. Audio Speech Lang. Process., vol. 27, no. 8, pp. 1256–1266, Aug. 2019.<br/>
-            [2] L. Della Libera, C. Subakan, M. Ravanelli, S. Cornell, F. Lepoutre, and F. Grondin, “Resource-efficient separation transformer,” in IEEE Int. Conf. Acoust. Speech Signal Process. (ICASSP), Apr. 2024, p. 761–765.<br/>
-            [3] A. Trockman and J. Z. Kolter, “Orthogonalizing convolutional layers with the Cayley transform,” in Int. Conf. Learn. Represent. (ICLR), 2021.<br/>
-            [4] C. Valentini-Botinhao, “Noisy reverberant speech database for training speech enhancement algorithms and TTS models,” University of Edinburgh, 2017.<br/>
-            </p> -->
-
         </div>
-    </body>
+
+        <div class="sample-section">
+            <div class="sample-title">Sample 2 (VoiceBank-DEMAND p232_002)</div>
+            
+            <div class="columns-container">
+                <div class="column">
+                    <span class="model-name">Conv-TasNet</span>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method / Kernel (ms)</th>
+                                <th>2</th>
+                                <th>32</th>
+                                <th>128</th>
+                                <th>512</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Conventional</th>
+                                <td><audio controls src="soundsamples/p232_002/output_ctn_conv_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_ctn_conv_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_ctn_conv_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_ctn_conv_4096.wav"></audio></td>
+                            </tr>
+                            <tr>
+                                <th>Conventional (r=1)</th>
+                                <td><audio controls src="soundsamples/p232_002/output_ctn_conv(r=1)_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_ctn_conv(r=1)_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_ctn_conv(r=1)_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_ctn_conv(r=1)_4096.wav"></audio></td>
+                            </tr>
+                            <tr class="proposed-row">
+                                <th>Proposed</th>
+                                <td><audio controls src="soundsamples/p232_002/output_ctn_prop_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_ctn_prop_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_ctn_prop_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_ctn_prop_4096.wav"></audio></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="column">
+                    <span class="model-name">RE-SepFormer</span>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method / Kernel (ms)</th>
+                                <th>2</th>
+                                <th>32</th>
+                                <th>128</th>
+                                <th>512</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Conventional</th>
+                                <td><audio controls src="soundsamples/p232_002/output_res_conv_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_res_conv_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_res_conv_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_res_conv_4096.wav"></audio></td>
+                            </tr>
+                            <tr>
+                                <th>Conventional (r=1)</th>
+                                <td><audio controls src="soundsamples/p232_002/output_res_conv(r=1)_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_res_conv(r=1)_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_res_conv(r=1)_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_res_conv(r=1)_4096.wav"></audio></td>
+                            </tr>
+                            <tr class="proposed-row">
+                                <th>Proposed</th>
+                                <td><audio controls src="soundsamples/p232_002/output_res_prop_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_res_prop_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_res_prop_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_002/output_res_prop_4096.wav"></audio></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="sample-section">
+            <div class="sample-title">Sample 3 (VoiceBank-DEMAND p232_003)</div>
+            
+            <div class="columns-container">
+                <div class="column">
+                    <span class="model-name">Conv-TasNet</span>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method / Kernel (ms)</th>
+                                <th>2</th>
+                                <th>32</th>
+                                <th>128</th>
+                                <th>512</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Conventional</th>
+                                <td><audio controls src="soundsamples/p232_003/output_ctn_conv_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_ctn_conv_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_ctn_conv_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_ctn_conv_4096.wav"></audio></td>
+                            </tr>
+                            <tr>
+                                <th>Conventional (r=1)</th>
+                                <td><audio controls src="soundsamples/p232_003/output_ctn_conv(r=1)_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_ctn_conv(r=1)_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_ctn_conv(r=1)_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_ctn_conv(r=1)_4096.wav"></audio></td>
+                            </tr>
+                            <tr class="proposed-row">
+                                <th>Proposed</th>
+                                <td><audio controls src="soundsamples/p232_003/output_ctn_prop_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_ctn_prop_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_ctn_prop_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_ctn_prop_4096.wav"></audio></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="column">
+                    <span class="model-name">RE-SepFormer</span>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method / Kernel (ms)</th>
+                                <th>2</th>
+                                <th>32</th>
+                                <th>128</th>
+                                <th>512</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Conventional</th>
+                                <td><audio controls src="soundsamples/p232_003/output_res_conv_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_res_conv_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_res_conv_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_res_conv_4096.wav"></audio></td>
+                            </tr>
+                            <tr>
+                                <th>Conventional (r=1)</th>
+                                <td><audio controls src="soundsamples/p232_003/output_res_conv(r=1)_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_res_conv(r=1)_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_res_conv(r=1)_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_res_conv(r=1)_4096.wav"></audio></td>
+                            </tr>
+                            <tr class="proposed-row">
+                                <th>Proposed</th>
+                                <td><audio controls src="soundsamples/p232_003/output_res_prop_16.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_res_prop_256.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_res_prop_1024.wav"></audio></td>
+                                <td><audio controls src="soundsamples/p232_003/output_res_prop_4096.wav"></audio></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
 </html>
