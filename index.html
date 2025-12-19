@@ -1,201 +1,122 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audio Separation Demo</title>
+    <title>Audio Separation Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;600;800&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            /* 配色設定：好きな色に変えられます */
+            --bg-color: #0f172a;       /* 深い紺色/黒 */
+            --card-bg: #1e293b;        /* カードの背景 */
+            --text-main: #f1f5f9;      /* 白文字 */
+            --text-sub: #94a3b8;       /* グレー文字 */
+            --accent-color: #38bdf8;   /* 水色（アクセント） */
+            --hero-color: #a855f7;     /* 紫（提案手法用） */
+            --hero-glow: rgba(168, 85, 247, 0.4); /* 光の効果 */
+        }
+
         body {
-            font-family: "Helvetica Neue", Arial, sans-serif;
-            max-width: 960px;
-            margin: 0 auto;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
             padding: 40px 20px;
-            background-color: #f5f7fa;
-            color: #333;
+            line-height: 1.6;
         }
 
-        h1 { text-align: center; margin-bottom: 10px; }
-        p.subtitle { text-align: center; color: #666; margin-bottom: 50px; }
-
-        h2.model-title {
-            background-color: #2c3e50;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            margin-top: 60px;
+        /* ヘッダーデザイン */
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #334155;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            margin: 0;
+            /* 文字にグラデーションをかける */
+            background: linear-gradient(135deg, #fff 0%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        h3.sample-title {
-            margin-top: 40px;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 10px;
-            color: #444;
+        p.subtitle {
+            color: var(--text-sub);
+            font-size: 1.2rem;
+            margin-top: 10px;
         }
 
-        /* テーブルのデザイン */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
+        /* セクション（サンプルごと）の箱 */
+        .sample-section {
+            max-width: 1000px;
+            margin: 0 auto 100px auto; /* 下に大きく余白 */
+        }
+
+        .sample-title {
+            font-size: 2rem;
+            font-weight: 300;
             margin-bottom: 30px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            color: var(--text-main);
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+        }
+
+        /* グリッドレイアウト */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* カードデザイン */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 25px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px); /* 浮き上がるアニメーション */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* 提案手法（Proposed）だけ特別扱いするクラス */
+        .card.is-hero {
+            background: linear-gradient(145deg, #2e1065, #1e293b);
+            border: 1px solid var(--hero-color);
+            box-shadow: 0 0 20px var(--hero-glow); /* 光らせる */
+            position: relative;
+            overflow: hidden;
         }
         
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-            vertical-align: middle;
-        }
-
-        th {
-            background-color: #f8f9fa;
+        /* 提案手法につける「PROPOSED」バッジ */
+        .card.is-hero::after {
+            content: "PROPOSED";
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--hero-color);
+            color: white;
+            font-size: 0.7rem;
             font-weight: bold;
-            width: 15%; /* ラベルの幅 */
+            padding: 5px 10px;
+            border-bottom-left-radius: 10px;
         }
 
-        /* 提案手法を目立たせる */
-        .highlight-row {
-            background-color: #fffde7; /* 薄い黄色 */
-            border-left: 5px solid #f1c40f;
-        }
-        .highlight-row th {
-            background-color: #fffde7;
-            font-weight: bold;
-            color: #d35400;
-        }
-
-        /* プレイヤーと画像の幅調整 */
-        audio { width: 250px; }
-        .spec-img {
-            width: 300px; /* 小さめに表示 */
-            height: 60px;
-            object-fit: cover;
-            border: 1px solid #eee;
-            vertical-align: middle;
-        }
-        
-        /* スマホ対応 */
-        @media (max-width: 600px) {
-            audio { width: 100%; }
-            .spec-img { display: none; } /* スマホでは波形を消してスッキリさせる */
-        }
-    </style>
-</head>
-<body>
-
-    <h1>Audio Separation Results</h1>
-    <p class="subtitle">Comparison of Conv-TasNet and RE-SepFormer with Proposed Method</p>
-
-    <h2 class="model-title">Model: Conv-TasNet</h2>
-
-    <h3 class="sample-title">Audio Sample 01</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Method</th>
-                <th>Audio</th>
-                <th>Spectrogram</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>Input (Mixture)</th>
-                <td><audio controls src="conv_01_input.mp3"></audio></td>
-                <td><img src="conv_01_input.svg" class="spec-img"></td>
-            </tr>
-            <tr>
-                <th>Target (Clean)</th>
-                <td><audio controls src="conv_01_target.mp3"></audio></td>
-                <td><img src="conv_01_target.svg" class="spec-img"></td>
-            </tr>
-            <tr>
-                <th>Conv.</th>
-                <td><audio controls src="conv_01_method1.mp3"></audio></td>
-                <td><img src="conv_01_method1.svg" class="spec-img"></td>
-            </tr>
-            <tr>
-                <th>Conv. (r=1)</th>
-                <td><audio controls src="conv_01_method2.mp3"></audio></td>
-                <td><img src="conv_01_method2.svg" class="spec-img"></td>
-            </tr>
-            <tr class="highlight-row">
-                <th>Prop.</th>
-                <td><audio controls src="conv_01_prop.mp3"></audio></td>
-                <td><img src="conv_01_prop.svg" class="spec-img"></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h3 class="sample-title">Audio Sample 02</h3>
-    <table>
-        <tbody>
-            <tr>
-                <th>Input</th>
-                <td><audio controls src="conv_02_input.mp3"></audio></td>
-                <td><img src="conv_02_input.svg" class="spec-img"></td>
-            </tr>
-            <tr>
-                <th>Target</th>
-                <td><audio controls src="conv_02_target.mp3"></audio></td>
-                <td><img src="conv_02_target.svg" class="spec-img"></td>
-            </tr>
-            <tr>
-                <th>Conv.</th>
-                <td><audio controls src="conv_02_method1.mp3"></audio></td>
-                <td><img src="conv_02_method1.svg" class="spec-img"></td>
-            </tr>
-            <tr>
-                <th>Conv. (r=1)</th>
-                <td><audio controls src="conv_02_method2.mp3"></audio></td>
-                <td><img src="conv_02_method2.svg" class="spec-img"></td>
-            </tr>
-            <tr class="highlight-row">
-                <th>Prop.</th>
-                <td><audio controls src="conv_02_prop.mp3"></audio></td>
-                <td><img src="conv_02_prop.svg" class="spec-img"></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h3 class="sample-title">Audio Sample 03</h3>
-    <p>（Sample 02のブロックをコピーして、ファイル名を 03 に変えてここに貼る）</p>
-
-
-    <h2 class="model-title">Model: RE-SepFormer</h2>
-
-    <h3 class="sample-title">Audio Sample 01</h3>
-    <table>
-        <tbody>
-            <tr>
-                <th>Input</th>
-                <td><audio controls src="resep_01_input.mp3"></audio></td>
-                <td><img src="resep_01_input.svg" class="spec-img"></td>
-            </tr>
-            <tr>
-                <th>Target</th>
-                <td><audio controls src="resep_01_target.mp3"></audio></td>
-                <td><img src="resep_01_target.svg" class="spec-img"></td>
-            </tr>
-            <tr>
-                <th>Conv.</th>
-                <td><audio controls src="resep_01_method1.mp3"></audio></td>
-                <td><img src="resep_01_method1.svg" class="spec-img"></td>
-            </tr>
-            <tr>
-                <th>Conv. (r=1)</th>
-                <td><audio controls src="resep_01_method2.mp3"></audio></td>
-                <td><img src="resep_01_method2.svg" class="spec-img"></td>
-            </tr>
-            <tr class="highlight-row">
-                <th>Prop.</th>
-                <td><audio controls src="resep_01_prop.mp3"></audio></td>
-                <td><img src="resep_01_prop.svg" class="spec-img"></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <p>（Conv-TasNetのときと同じように、必要な分だけテーブルをコピーして増やしてください）</p>
-
-</body>
-</html>
+        .card-label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight:
