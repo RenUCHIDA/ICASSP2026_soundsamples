@@ -1,6 +1,6 @@
 /* 基本設定 */
 body {
-  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
   margin: 0;
   background-color: #f4f6f8; /* 背景を少しグレーにして、メインコンテンツを際立たせる */
   color: #333;
