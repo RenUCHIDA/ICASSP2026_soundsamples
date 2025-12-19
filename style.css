@@ -277,7 +277,7 @@ audio:focus {
   object-fit: cover;    /* 枠に合わせてトリミング（または contain で全体表示） */
   margin-top: 8px;      /* プレーヤーとの隙間 */
   border: 1px solid #e2e8f0; /* 薄い枠線 */
-  border-radius: 4px;   /* 角を少し丸く */
+/*  border-radius: 4px;   /* 角を少し丸く */
   background-color: #fff;
 }
 
