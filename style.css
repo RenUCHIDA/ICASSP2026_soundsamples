@@ -222,3 +222,48 @@ audio:focus {
 .column {
   overflow-x: auto; /* 横スクロールを許可 */
 }
+
+/* ▼▼▼ Reference (Noisy/Clean) 表示用 ▼▼▼ */
+.reference-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px; /* NoisyとCleanの間隔 */
+  margin: 0 auto 30px auto; /* 下のテーブルとの余白 */
+  padding: 15px 40px;
+  background-color: #eef2f6; /* 少し目立つ背景色 */
+  border-radius: 50px; /* 角丸（カプセル型）にする */
+  width: fit-content; /* 中身の幅に合わせる */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.ref-item {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* ラベルとプレイヤーの間隔 */
+}
+
+.ref-label {
+  font-weight: bold;
+  color: #475569;
+  font-size: 0.9rem;
+  text-transform: uppercase; /* 大文字にする */
+  letter-spacing: 0.05em;
+}
+
+/* Reference用のプレイヤーは少し大きめでもOK */
+.reference-wrapper audio {
+  width: 140px;
+}
+
+/* スマホ対応 */
+@media (max-width: 600px) {
+  .reference-wrapper {
+    flex-direction: column; /* 縦並びにする */
+    gap: 15px;
+    border-radius: 12px;
+    width: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
