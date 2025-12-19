@@ -34,7 +34,7 @@
             <!-- We used eight algorithms for seven audio excerpts from [1]. The seven excerpts were stretched by the eight algorithms with a moderate time stretching factor &alpha; = 1.6 and a large stretching factor &alpha; = 3.2. -->
             <br />
             <br />
-            <b>Google Chrome is recommended.</b>
+            <!-- <b>Google Chrome is recommended.</b> -->
             <br /><br />
 
 
@@ -44,19 +44,6 @@
             <b> Conv-TasNet </b><br />
             <table>
             <tbody>
-                <tr>
-                    <th align="left"> kernel size [ms] </th>
-                    <td align="center"> 2 <br /></td>
-                    <!-- <td align="center"> 4 <br /></td> -->
-                    <!-- <td align="center"> 8 <br /></td> -->
-                    <!-- <td align="center"> 16 <br /></td> -->
-                    <td align="center"> 32 <br /></td>
-                    <!-- <td align="center"> 64 <br /></td> -->
-                    <td align="center"> 128 <br /></td>
-                    <!-- <td align="center"> 256 <br /></td> -->
-                    <td align="center"> 512 <br /></td>
-                </tr>
-
                 <tr>
                     <th align="left"> Conventional </th>
                     <td align="center"> <audio controls src="soundsamples/p232_001/output_ctn_conv_16.wav"></audio><br /></td>
@@ -96,16 +83,6 @@
                     <td align="center"> <audio controls src="soundsamples/p232_001/output_ctn_prop_4096.wav"></audio><br /></td>
                 </tr>
                 
-            </tbody>
-            </table>
-            </center><br /><br />
-            </div>
-
-            <div class="column">
-            <center>
-                <b> RE-SepFormer </b><br />
-                <table>
-                <tbody>
                 <tr>
                     <th align="left"> kernel size [ms] </th>
                     <td align="center"> 2 <br /></td>
@@ -119,6 +96,16 @@
                     <td align="center"> 512 <br /></td>
                 </tr>
 
+            </tbody>
+            </table>
+            </center><br /><br />
+            </div>
+
+            <div class="column">
+            <center>
+            <b> RE-SepFormer </b><br />
+            <table>
+            <tbody>
                 <tr>
                     <th align="left"> Conventional </th>
                     <td align="center"> <audio controls src="soundsamples/p232_001/output_res_conv_16.wav"></audio><br /></td>
@@ -158,11 +145,24 @@
                     <td align="center"> <audio controls src="soundsamples/p232_001/output_res_prop_4096.wav"></audio><br /></td>
                 </tr>
 
-                </tbody>
-                </table>
-                </center><br /><br />
-                </div>
-                </div>
+                <tr>
+                    <th align="left"> kernel size [ms] </th>
+                    <td align="center"> 2 <br /></td>
+                    <!-- <td align="center"> 4 <br /></td> -->
+                    <!-- <td align="center"> 8 <br /></td> -->
+                    <!-- <td align="center"> 16 <br /></td> -->
+                    <td align="center"> 32 <br /></td>
+                    <!-- <td align="center"> 64 <br /></td> -->
+                    <td align="center"> 128 <br /></td>
+                    <!-- <td align="center"> 256 <br /></td> -->
+                    <td align="center"> 512 <br /></td>
+                </tr>
+
+            </tbody>
+            </table>
+            </center><br /><br />
+            </div>
+            </div>
 
                 <!-- <h3 id="references">References:</h3>
                 <p>
