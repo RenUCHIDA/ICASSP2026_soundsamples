@@ -267,3 +267,21 @@ audio:focus {
     margin-right: 10px;
   }
 }
+
+
+/* ▼▼▼ スペクトログラム画像用のスタイル ▼▼▼ */
+.spec-img {
+  display: block;       /* 常に改行してプレーヤーの下に表示 */
+  width: 100%;          /* セルの幅いっぱいに広げる */
+  height: 50px;         /* 高さを統一（必要に応じて変更してください） */
+  object-fit: cover;    /* 枠に合わせてトリミング（または contain で全体表示） */
+  margin-top: 8px;      /* プレーヤーとの隙間 */
+  border: 1px solid #e2e8f0; /* 薄い枠線 */
+  border-radius: 4px;   /* 角を少し丸く */
+  background-color: #fff;
+}
+
+/* Referenceエリア内の画像調整 */
+.reference-wrapper .spec-img {
+  width: 140px; /* Referenceエリアでは幅を固定 */
+}
