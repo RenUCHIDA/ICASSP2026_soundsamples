@@ -1,156 +1,149 @@
-
-audio {
-  width: 100px;
-  height: 20px;
-}
-
+/* 基本設定 */
 body {
-  /*font-family: 'Roboto', Arial, sans-serif;*/
-  font-family: 'Hiragino Kaku Gothic Pro', 'Arial', sans-serif;
+  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
   margin: 0;
-  background-color: #FFFFFF;
+  background-color: #f4f6f8; /* 背景を少しグレーにして、メインコンテンツを際立たせる */
+  color: #333;
+  line-height: 1.6;
 }
 
-.pageright {
-  width: 5%;
-  float: right
-}
-
-#title {
-  margin: 0 5% 0 0;
-  padding: 0 5% 2% 4%;
-  /*  border-right: 1px dashed #000; */
-  /*  border-left: 1px solid #000; */
-  /*  background-color: #abc;  */
-}
-
-.boldbig {
-  font-size: 150%;
-  font-weight: bold;
-}
-
-.boldbig2 {
-  font-size: 150%;
-  font-weight: bold;
-  margin-bottom: 10px;
-  margin-top: 10px;
-}
-
+/* メインコンテナ */
 .main {
-  max-width:1200px;
-  margin: auto;
-  padding: 2% 5% 5% 5%;
-  border-left: 0px solid #999;
-  border-right: 0px solid #999;
-  border-bottom: 0px dashed #999;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 40px;
   background-color: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05); /* ほんのり影をつける */
+  border-radius: 8px;
 }
 
-#toc_container {
-  background: #f9f9f9 none repeat scroll 0 0;
-  border: 1px solid #aaa;
-  display: table;
-  font-size: 95%;
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 8px;
-  width: auto;
+/* ヘッダー周り */
+header h1 {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
 }
 
-.toc_title {
-  font-weight: 700;
-  font-size: 18pt;
-  text-align: left;
+.authors {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #555;
+  font-weight: 500;
 }
 
-#toc_container ul  {
-  list-style: outside none none !important; margin-left: -40px;
+.abstract {
+  background-color: #f9fafb;
+  padding: 20px;
+  border-left: 4px solid #3498db;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  margin-bottom: 40px;
+  text-align: justify;
 }
 
-.h2_explainer {
-  margin-bottom: 2px;
+/* サンプルセクション */
+.sample-section {
+  margin-bottom: 60px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 40px;
 }
 
-h3 {
-  margin-top: 30px;    
-  margin-bottom: 2px;
-}
-.h3_explainer {
-  padding-bottom: 10px;
-  padding-top: 5px;
-}
-.transcript {
-  font-style: italic;
-}
-.text_e2e {
-  font-style: italic;
-  color: #666666;
-  font-size: 11pt;
+.sample-section:last-child {
+  border-bottom: none;
 }
 
-/* padding causes text to overlap buttons on e2e page */
-.text_gst {
-  font-style: italic;
-  color: #666666;
-  font-size: 11pt;
-  padding-bottom: 10px;
-  padding-top: 15px;
-  }
-
-/* for e2e page */
-td.reference {
-  text-wrap: overflow;
-  min-width: 500px;
-  max-width: 500px;
-}
-td.reference button {
-  margin-left: 10px;
-}
-td.algorithm {
-  text-align: right;
-}
-#player {
-  position: fixed;
-  top: 0;
-  right: 0;
-}
-td.synthesis {
-  text-align:center;
-}
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.sample-title {
+  font-size: 1.4rem;
+  border-left: 5px solid #2c3e50;
+  padding-left: 15px;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: bold;
 }
 
-
-
-/* ▼▼▼ 2段組用のスタイル追加 ▼▼▼ */
+/* 2段組レイアウト */
 .columns-container {
   display: flex;
-  flex-wrap: wrap;       /* 画面幅が足りないときは折り返す */
-  justify-content: center; /* 中央寄せ */
-  gap: 20px;             /* カラム間の隙間 */
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px; /* 間隔を少し広げる */
   width: 100%;
-  margin-top: 20px;
 }
 
 .column {
-  flex: 1;               /* 均等な幅に広がる */
-  min-width: 450px;      /* 【重要】これ以上狭くなったら縦並びにする */
+  flex: 1;
+  min-width: 450px; /* 幅が狭くなったら折り返す */
   max-width: 100%;
 }
 
-/* 2段組の中のテーブル調整 */
-.column table {
-  width: 100%;           /* カラム幅いっぱいにテーブルを広げる */
-  font-size: 90%;        /* 横並び時は少し文字を小さくすると収まりが良い */
+.model-name {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #444;
+  display: block;
 }
 
-/* スマホ対応: 完全に縦並びにする */
+/* テーブルデザイン */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  background-color: #fff;
+}
+
+th, td {
+  padding: 10px 5px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+/* テーブルヘッダー */
+thead th {
+  background-color: #f1f5f9;
+  color: #555;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* 行のラベル（左端） */
+tbody th {
+  text-align: left;
+  padding-left: 10px;
+  font-weight: normal;
+  color: #444;
+  width: 140px; /* ラベル幅固定 */
+}
+
+/* 提案手法（Proposed）のハイライト */
+tr.proposed-row {
+  background-color: #fffbeb; /* 薄い黄色 */
+  border-left: 3px solid #f59e0b; /* アクセントカラー */
+}
+
+tr.proposed-row th {
+  font-weight: bold;
+  color: #d97706;
+}
+
+/* オーディオプレイヤー */
+audio {
+  width: 110px; /* 少しだけ大きく */
+  height: 25px;
+  vertical-align: middle;
+}
+
+/* スマホ対応 */
 @media (max-width: 900px) {
   .column {
     min-width: 100%;
+  }
+  .main {
+    padding: 20px;
+    margin: 10px;
   }
 }
