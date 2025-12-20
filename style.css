@@ -150,8 +150,8 @@ audio {
 
 /* 左上のヘッダー（Method \ Kernel size）の調整 */
 .header-label {
-  font-size: 0.8rem;   /* 他の文字より少し小さくする
-  /* line-height: 1.2;    /* 行間を少し狭くして2行でもすっきり見せる */
+  font-size: 0.8rem;   /* 他の文字より少し小さくする */ 
+  line-height: 1.2;    /* 行間を少し狭くして2行でもすっきり見せる */
   padding: 10px 5px;    /* 余白を微調整  */
   white-space: nowrap; /* 勝手な折り返しを防ぐ（<br>でのみ改行） */
 }
@@ -204,6 +204,8 @@ audio:focus {
   right: 6px;
   text-align: right;
   color: #555;
+  font-size: 0.8rem;   /* 他の文字より少し小さくする */ 
+  line-height: 1.2;    /* 行間を少し狭くして2行でもすっきり見せる */
 }
 
 /* 左下の文字 */
@@ -213,6 +215,7 @@ audio:focus {
   left: 6px;
   text-align: left;
   color: #555;
+  font-size: 0.8rem;   /* 他の文字より少し小さくする */ 
 }
 
 /* テーブルが画面からはみ出さないようにスクロール枠をつける */
