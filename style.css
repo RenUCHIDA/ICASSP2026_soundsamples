@@ -150,9 +150,9 @@ audio {
 
 /* 左上のヘッダー（Method / Kernel size）の調整 */
 .header-label {
-  font-size: 1rem;   /* 他の文字より少し小さくする */
-  line-height: 1.2;    /* 行間を少し狭くして2行でもすっきり見せる */
-  padding: 8px 5px;    /* 余白を微調整 */
+  /* font-size: 1rem;   /* 他の文字より少し小さくする */
+  /* line-height: 1.2;    /* 行間を少し狭くして2行でもすっきり見せる */
+  /* padding: 8px 5px;    /* 余白を微調整 */
   white-space: nowrap; /* 勝手な折り返しを防ぐ（<br>でのみ改行） */
 }
 
@@ -183,15 +183,15 @@ audio:focus {
   overflow: hidden;
 }
 
-/* 斜めの線（左上から右下 ＼ に修正済み） */
+/* 斜めの線（罫線 #eee / 1px に合わせました） */
 .diag-line {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  /* 座標を x1='0' y1='0' (左上) から x2='100%' y2='100%' (右下) に変更しました */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cline x1='0' y1='0' x2='100%25' y2='100%25' stroke='%23ddd' stroke-width='1.5'/%3E%3C/svg%3E");
+  /* stroke='%23eee' (色を#eeeに), stroke-width='1' (太さを1pxに) 変更 */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cline x1='0' y1='0' x2='100%25' y2='100%25' stroke='%23eee' stroke-width='1'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-size: 100% 100%;
   pointer-events: none;
