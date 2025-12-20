@@ -232,10 +232,10 @@ audio:focus {
   justify-content: center;
   align-items: center;
   gap: 40px; /* NoisyとCleanの間隔 */
-  margin: 0 auto 30px auto; /* 下のテーブルとの余白 */
+  margin: 0 auto 20px auto; /* 下のテーブルとの余白 */
   padding: 15px 40px;
   background-color: #f8fafc; /* 少し目立つ背景色 */
-  border-radius: 50px; /* 角丸（カプセル型）にする */
+  /* border-radius: 50px; /* 角丸（カプセル型）にする */
   width: fit-content; /* 中身の幅に合わせる */
   /* box-shadow: 0 2px 5px rgba(0,0,0,0.05); */
 }
