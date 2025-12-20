@@ -45,7 +45,7 @@ header h1 {
 /* サンプルセクション */
 .sample-section {
   margin-bottom: 60px;
-  border-bottom: 1px solid #eee;
+  /* border-bottom: 1px solid #eee; */
   padding-bottom: 40px;
 }
 
@@ -293,7 +293,7 @@ audio:focus {
 }
 
 .results-intro h2 {
-  font-size: 1.3rem;   /* ★変更: 1.8rem → 1.3rem (かなり控えめなサイズに) */
+  font-size: 1.6rem;   /* ★変更: 1.8rem → 1.4rem (かなり控えめなサイズに) */
   color: #1e293b;
   margin-bottom: 10px; /* 余白も少し詰めてスッキリさせる */
   font-weight: bold;   /* 小さいので太字でメリハリをつける */
