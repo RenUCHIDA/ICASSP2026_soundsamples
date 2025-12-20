@@ -256,7 +256,7 @@ audio:focus {
 
 /* Reference用のプレイヤーは少し大きめでもOK */
 .reference-wrapper audio {
-  width: 140px;
+  width: 120px;
 }
 
 /* スマホ対応 */
@@ -285,7 +285,7 @@ audio:focus {
 
 /* Referenceエリア内の画像調整 */
 .reference-wrapper .spec-img {
-  width: 140px;       /* Referenceのプレーヤー幅に合わせる */
+  width: 120px;       /* Referenceのプレーヤー幅に合わせる */
   height: auto;       /* 比率維持 */
 }
 
