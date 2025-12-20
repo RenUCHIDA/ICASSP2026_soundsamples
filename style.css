@@ -44,8 +44,7 @@ header h1 {
 
 /* サンプルセクション */
 .sample-section {
-  margin-bottom: 30px;
-  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .sample-section:last-child {
